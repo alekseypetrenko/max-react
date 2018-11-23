@@ -9,10 +9,7 @@ class Person extends Component {
                 <p>{this.props.children}</p>
                 <input type="text" onChange={this.props.changed} value={this.props.name}/>
             </div>
-
         )
     }
-
 }
-
 export default Person;
