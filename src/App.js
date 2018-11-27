@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import Person from "./Person/Person"
+import Radium from "radium";
+import Person from "./Person/Person";
+
 
 class App extends Component {
   state = {
@@ -50,11 +52,16 @@ class App extends Component {
   }
   render() {
     const style = {
-      backgroundColor: "white",
+      backgroundColor: "green",
+      color: "white",
       font: "inherit",
       border: "1px solid blue",
       padding: "8px",
-      cursor: "pointer"
+      cursor: "pointer",
+      ":hover": {
+        backgroundColor: "lightgreen",
+        color: "black"
+      }
     }
     let persons = null;
     if (this.state.showPersons) {
@@ -63,20 +70,36 @@ class App extends Component {
           {this.state.persons.map((person, index) => {
             return (
               <Person 
-              click = {() => this.deletePersonsHandler(index)}
-              name = {person.name}
-              age = {person.age}
-              key = {person.id}
-              changed={(event) =>this.nameChangeHandler(event, person.id)}
-            />
+                click = {() => this.deletePersonsHandler(index)}
+                name = {person.name}
+                age = {person.age}
+                key = {person.id}
+                changed={(event) =>this.nameChangeHandler(event, person.id)}
+              />
             )
           })}
         </div>
       )
+      style.backgroundColor = "red";
+      style[":hover"] = {
+        backgroundColor: "lightred",
+        color: "black"
+      }
     }
+
+    let classes = [];
+
+    if (this.state.persons.length <=2 ) {
+      classes.push("red");
+    }
+    if (this.state.persons.length <=1 ) {
+      classes.push("bold");
+    }
+
     return (
       <div className="App">
-        <h1>React</h1>
+        <h1>Hi, I', a React App</h1>
+        <p className={classes.join(" ")}>This is really working!</p>
         <button style={style} onClick={this.togglePersonHandler}>
           Switch Name
         </button>
@@ -87,4 +110,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Radium(App);
